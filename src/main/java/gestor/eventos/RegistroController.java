@@ -4,6 +4,7 @@
  */
 package gestor.eventos;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,9 +26,15 @@ public class RegistroController implements Initializable {
     @FXML
     private PasswordField txtContrasena;
     @FXML
-    private PasswordField txtConfirmaContra;
-    @FXML
     private Button btnRegistrarse;
+    @FXML
+    private TextField txtTelefono;
+    @FXML
+    private PasswordField txtApellido;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private Button btnInicio;
 
     /**
      * Initializes the controller class.
@@ -39,6 +46,11 @@ public class RegistroController implements Initializable {
 
     @FXML
     private void register(ActionEvent event) {
+    }
+
+    @FXML
+    private void begin(ActionEvent event)throws IOException {
+        App.setRoot("inicio");
     }
     
 }
