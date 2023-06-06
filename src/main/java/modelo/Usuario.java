@@ -15,7 +15,7 @@ public class Usuario {
     private String email;
     private String telefono;
     private String contraseña;
-    private Rol rol; // Enum que represente los roles de usuario (Administrador, Cliente)
+    private String rol; // Enum que represente los roles de usuario (Administrador, Cliente)
     
     // Constructor, getters y setters
     
@@ -23,7 +23,7 @@ public class Usuario {
         
     }
 
-    public Usuario(int id, String nombre, String apellido, String email, String telefono, String contraseña, Rol rol) {
+    public Usuario(int id, String nombre, String apellido, String email, String telefono, String contraseña, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -81,11 +81,11 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public Rol getRol() {
+    public String getRol() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRol(String rol) {
         this.rol = rol;
     }
     

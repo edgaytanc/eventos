@@ -47,5 +47,6 @@ public class InicioController implements Initializable {
     private void cargaEventos()throws IOException {
         App.setRoot("listaEvento");
     }
+
     
 }

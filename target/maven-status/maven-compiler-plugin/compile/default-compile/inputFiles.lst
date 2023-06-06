@@ -14,11 +14,15 @@ D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Asien
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\SecondaryController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\CompradorController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\DatabaseConnection.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PrecioController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Rol.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\CompraBoletosController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\AsientoSeleccionado.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\PrecioManager.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\AddEventController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\TemporizadorListener.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\EventoDAO.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\TipoBoleto.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\EventManager.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\ListaEventoController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\ListaAsientoSeleccionado.java
@@ -31,3 +35,4 @@ D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\event
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PagoTarjetaController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\BoletoManager.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Temporizador.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PanelAdministradorController.java

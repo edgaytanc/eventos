@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -38,12 +39,18 @@ public class CompraBoletosController implements Initializable {
     private Button btnAceptar;
     @FXML
     private Button btnCancelar;
+    @FXML
+    private Label txtEscenario;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        if (App.selectedEvent != null) {
+            txtEscenario.setText("ESCENARIO " + App.selectedEvent.getNombre());
+        }
         // Define las filas y columnas de tu disposición de asientos.
         int numRows = 14;
         int numCols = 14;

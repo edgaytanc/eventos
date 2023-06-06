@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="253.0" prefWidth="375.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor.eventos.ListaEventoController">
+<VBox alignment="CENTER" prefHeight="489.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor.eventos.ListaEventoController">
     <AnchorPane fx:id="eventListPane" xmlns:fx="http://javafx.com/fxml">
     <VBox alignment="TOP_CENTER">
         <Label alignment="CENTER" contentDisplay="CENTER" text="Lista de Eventos">
@@ -24,11 +24,11 @@
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="125.60003662109375" text="Nombre del Evento" />
                 <TableColumn fx:id="dateColumn" prefWidth="109.60003662109375" text="Fecha" />
-                <TableColumn fx:id="locationColumn" prefWidth="138.3999786376953" text="Lugar" />
+                <TableColumn fx:id="sinopsisColumn" prefWidth="138.3999786376953" text="Lugar" />
             </columns>
         </TableView>
         <HBox>
-            <Button onAction="#addEvent" text="Agregar Evento" />
+            <Button onAction="#selectEvent" text="Seleccionar Evento" />
             <Button onAction="#editEvent" text="Editar Evento" />
             <Button onAction="#deleteEvent" text="Eliminar Evento" />
         </HBox>

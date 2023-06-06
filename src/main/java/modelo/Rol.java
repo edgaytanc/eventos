@@ -9,6 +9,6 @@ package modelo;
  * @author David
  */
 public enum Rol {
-    ADMINISTRADOR,
-    CLIENTE
+    Administrador,
+    cliente
 }

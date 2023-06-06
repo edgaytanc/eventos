@@ -11,6 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import modelo.Evento;
+import modelo.Usuario;
 
 /**
  * JavaFX App
@@ -18,12 +20,14 @@ import javafx.scene.layout.VBox;
 public class App extends Application {
 
     private static Scene scene;
+    public static Evento selectedEvent; // Esto permite el acceso público a este campo
+    public static Usuario usuarioActivo = null; //guarda el usuario activo de la aplicacion
 
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("inicio"), 800, 600);
         stage.setScene(scene);
-        stage.setMaximized(true);  // Para abrir la ventana maximizada.
+//        stage.setMaximized(true);  // Para abrir la ventana maximizada.
         stage.show();
     }
 
@@ -44,6 +48,8 @@ public class App extends Application {
 
         return root;
     }
+    
+    
 
     public static void main(String[] args) {
         launch();
