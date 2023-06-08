@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gestor.eventos;
 
 import java.io.File;
@@ -26,12 +22,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import modelo.EventManager;
 import modelo.Evento;
+import modelo.PrecioManager;
+import modelo.SeccionManager;
 
-/**
- * FXML Controller class
- *
- * @author David
- */
 public class AddEventController implements Initializable {
 
     @FXML
@@ -54,13 +47,34 @@ public class AddEventController implements Initializable {
     private ImageView imagenView;
     @FXML
     private Button seleccionarImagenButton;
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnRegresar;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(App.eventoCrud==1){
+            btnEditar.setDisable(true);
+            btnEliminar.setDisable(true);
+        }
+        else if(App.eventoCrud==2){
+            cargarEvento();
+            btnAgregar.setDisable(true);
+            btnEliminar.setDisable(true);
+        }
+        else if(App.eventoCrud==3){
+            cargarEvento();
+            btnAgregar.setDisable(true);
+            btnEditar.setDisable(true);
+        }
     }
 
     @FXML
@@ -96,6 +110,20 @@ public class AddEventController implements Initializable {
         publicacionField.setValue(null);
         ocultarField.setValue(null);
     }
+    
+    private void cargarEvento(){
+        Evento evento = App.selectedEvent;
+        nombreField.setText(evento.getNombre());
+        sinopsisField.setText(evento.getSinopsis());
+        fechaInicioField.setValue(evento.getFechaInicio().toLocalDate());
+        fechaFinField.setValue(evento.getFechaFin().toLocalDate());
+        imagenField.setText(evento.getImagenPublicitaria());
+        responsableField.setText(evento.getResponsable());
+        publicacionField.setValue(evento.getFechaHoraPublicacion().toLocalDate());
+        ocultarField.setValue(evento.getFechaHoraOcultar().toLocalDate());
+        
+        File file = new File(evento.getImagenPublicitaria());
+    }
 
     @FXML
     private void seleccionarImagen() {
@@ -118,5 +146,55 @@ public class AddEventController implements Initializable {
             }
         }
     }
+
+    @FXML
+    private void editEvent(ActionEvent event) {
+        int id = EventManager.buscarEvento(nombreField.getText());
+        String nombre = nombreField.getText();
+        String sinopsis = sinopsisField.getText();
+        LocalDateTime fechaInicio = LocalDateTime.of(fechaInicioField.getValue(), LocalTime.MIDNIGHT);
+        LocalDateTime fechaFin = LocalDateTime.of(fechaFinField.getValue(), LocalTime.MIDNIGHT);
+        String imagen = imagenField.getText();
+        String responsable = responsableField.getText();
+        LocalDateTime fechaPublicacion = LocalDateTime.of(publicacionField.getValue(), LocalTime.MIDNIGHT);
+        LocalDateTime fechaOcultar = LocalDateTime.of(ocultarField.getValue(), LocalTime.MIDNIGHT);
+
+        Evento newEvent = new Evento(id, nombre, sinopsis, fechaInicio, fechaFin, imagen, responsable, fechaPublicacion, fechaOcultar);
+        EventManager.modificarEvento(newEvent);
+        
+        clearFields();
+    }
+
+    @FXML
+    private void deleteEvent(ActionEvent event) {
+        int id = EventManager.buscarEvento(nombreField.getText());
+        String nombre = nombreField.getText();
+        String sinopsis = sinopsisField.getText();
+        LocalDateTime fechaInicio = LocalDateTime.of(fechaInicioField.getValue(), LocalTime.MIDNIGHT);
+        LocalDateTime fechaFin = LocalDateTime.of(fechaFinField.getValue(), LocalTime.MIDNIGHT);
+        String imagen = imagenField.getText();
+        String responsable = responsableField.getText();
+        LocalDateTime fechaPublicacion = LocalDateTime.of(publicacionField.getValue(), LocalTime.MIDNIGHT);
+        LocalDateTime fechaOcultar = LocalDateTime.of(ocultarField.getValue(), LocalTime.MIDNIGHT);
+
+        Evento newEvent = new Evento(id, nombre, sinopsis, fechaInicio, fechaFin, imagen, responsable, fechaPublicacion, fechaOcultar);
+        PrecioManager.eliminaPrecio(id);
+        SeccionManager.eliminaSeccion(id);
+        EventManager.eliminarEvento(newEvent);
+        
+        
+        clearFields();
+    }
+
+    @FXML
+    private void regresar(ActionEvent event) {
+        try {
+            App.setRoot("panelAdministrador");
+        } catch (IOException ex) {
+            Logger.getLogger(AddEventController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
 }

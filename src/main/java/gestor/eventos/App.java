@@ -23,6 +23,7 @@ public class App extends Application {
     public static Evento selectedEvent; // Esto permite el acceso público a este campo
     public static Usuario usuarioActivo = null; //guarda el usuario activo de la aplicacion
     public static Integer idReporte;
+    public static Integer eventoCrud;
 
     @Override
     public void start(Stage stage) throws IOException {

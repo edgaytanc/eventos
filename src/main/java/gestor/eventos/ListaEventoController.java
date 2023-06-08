@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,6 +40,12 @@ public class ListaEventoController implements Initializable {
     private TableColumn<Evento, String> locationColumn;
     @FXML
     private TableColumn<?, ?> sinopsisColumn;
+    @FXML
+    private Button btnSeleccionar;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnEliminar;
 
     /**
      * Initializes the controller class.
@@ -62,15 +69,50 @@ public class ListaEventoController implements Initializable {
                 App.selectedEvent = newSelection; // Guarda el evento seleccionado
             }
         });
+        if (App.usuarioActivo == null) {
+            btnEditar.setDisable(true);
+            btnEliminar.setDisable(true);
+        }
 
     }
 
     @FXML
     private void editEvent(ActionEvent event) {
+        if (App.selectedEvent != null) {
+            App.eventoCrud = 2;
+            try {
+                App.setRoot("AddEvent");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No selecciono evento");
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
     private void deleteEvent(ActionEvent event) {
+        if (App.selectedEvent != null) {
+            App.eventoCrud = 3;
+            try {
+                App.setRoot("AddEvent");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No selecciono evento");
+            alert.showAndWait();
+        }
     }
 
     @FXML

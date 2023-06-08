@@ -23,4 +23,25 @@ public class PrecioManager {
             return false; // Devolver false si ocurre una excepción
         }
     }
+
+    public static void eliminaPrecio(int id_evento) {
+        String sql = "DELETE FROM precios WHERE evento_id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id_evento);
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Los precios asociados al evento han sido eliminados exitosamente");
+            } else {
+                System.out.println("No se encontraron precios para eliminar asociados a este evento");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Eliminación fallida");
+        }
+    }
+
 }

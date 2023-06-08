@@ -147,25 +147,51 @@ public class EventManager {
         return -1;  // Retorna -1 si no se encuentra el evento
     }
 
-    public void modificarEvento(Evento evento) {
-        String sql = "UPDATE eventos SET nombre = ?, sinopsis = ?, fechaInicio = ?, fechaFin = ?, imagenPublicitaria = ?, responsable = ?, fechaHoraPublicacion = ?, fechaHoraOcultar = ? WHERE id = ?";
+    public static void modificarEvento(Evento evento) {
+        String sql = "UPDATE eventos SET nombre = ?, sinopsis = ?, fecha_inicio = ?, fecha_fin = ?, imagen_publicitaria = ?, responsable = ?, fecha_hora_publicacion = ?, fecha_hora_ocultar = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, evento.getNombre());
             statement.setString(2, evento.getSinopsis());
-            statement.setObject(3, evento.getFechaInicio());
-            statement.setObject(4, evento.getFechaFin());
+            statement.setTimestamp(3, Timestamp.valueOf(evento.getFechaInicio()));
+            statement.setTimestamp(4, Timestamp.valueOf(evento.getFechaFin()));
             statement.setString(5, evento.getImagenPublicitaria());
             statement.setString(6, evento.getResponsable());
-            statement.setObject(7, evento.getFechaHoraPublicacion());
-            statement.setObject(8, evento.getFechaHoraOcultar());
+            statement.setTimestamp(7, Timestamp.valueOf(evento.getFechaHoraPublicacion()));
+            statement.setTimestamp(8, Timestamp.valueOf(evento.getFechaHoraOcultar()));
             statement.setInt(9, evento.getId());
 
-            statement.executeUpdate();
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Actualizacion exitosa");
+            } else {
+                System.out.println("No se encontró el registro para actualizar");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Actualizacion fallida");
+        }
+    }
+
+    public static void eliminarEvento(Evento evento) {
+        String sql = "DELETE FROM eventos WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, evento.getId());
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("El evento ha sido eliminado exitosamente");
+            } else {
+                System.out.println("No se encontró el evento para eliminar");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Eliminación fallida");
         }
     }
 
@@ -207,7 +233,6 @@ public class EventManager {
 //        // No encontramos el asiento, o no estaba disponible
 //        return null;
 //    }
-
     public boolean comprarBoleto(Boleto boleto, Cliente cliente) {
         // Aquí iría tu código para realizar la transacción de la compra.
         // Esto podría implicar crear un nuevo registro en la base de datos para la compra,

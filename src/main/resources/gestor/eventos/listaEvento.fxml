@@ -28,9 +28,9 @@
             </columns>
         </TableView>
         <HBox>
-            <Button onAction="#selectEvent" text="Seleccionar Evento" />
-            <Button onAction="#editEvent" text="Editar Evento" />
-            <Button onAction="#deleteEvent" text="Eliminar Evento" />
+            <Button fx:id="btnSeleccionar" onAction="#selectEvent" text="Seleccionar Evento" />
+            <Button fx:id="btnEditar" onAction="#editEvent" text="Editar Evento" />
+            <Button fx:id="btnEliminar" onAction="#deleteEvent" text="Eliminar Evento" />
         </HBox>
     </VBox>
       <VBox.margin>

@@ -37,6 +37,7 @@ public class PanelAdministradorController implements Initializable {
 
     @FXML
     private void addEventos(ActionEvent event) {
+        App.eventoCrud=1;
         try {
             App.setRoot("AddEvent");
         } catch (IOException e) {
