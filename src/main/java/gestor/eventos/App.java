@@ -22,6 +22,7 @@ public class App extends Application {
     private static Scene scene;
     public static Evento selectedEvent; // Esto permite el acceso público a este campo
     public static Usuario usuarioActivo = null; //guarda el usuario activo de la aplicacion
+    public static Integer idReporte;
 
     @Override
     public void start(Stage stage) throws IOException {

@@ -1,6 +1,9 @@
 package modelo;
 
+import gestor.eventos.App;
 import modelo.DatabaseConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.*;
 
 public class UserManager {
@@ -48,6 +51,7 @@ public class UserManager {
                     String rol = resultSet.getString("rol");
 
                     Usuario usuario = new Usuario(id,nombre,apellido,mail,telefono,storedPassword,rol);
+                    App.usuarioActivo=usuario;
                     return resultSet.getString("rol");
                 }
             }
@@ -83,5 +87,33 @@ public class UserManager {
         // Devolver -1 para indicar que ocurrió un error
         return -1;
     }
+    
+    public static List<Usuario> todosLosUsuarios() {
+    List<Usuario> usuarios = new ArrayList<>();
+    
+    try (Connection connection = DatabaseConnection.getConnection()) {
+        String query = "SELECT * FROM usuarios";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String nombre = resultSet.getString("nombre");
+            String apellido = resultSet.getString("apellido");
+            String email = resultSet.getString("email");
+            String telefono = resultSet.getString("telefono");
+            String contrasena = resultSet.getString("contraseña");
+            String rol = resultSet.getString("rol");
+            
+            Usuario usuario = new Usuario(id, nombre, apellido, email, telefono, contrasena, rol);
+            usuarios.add(usuario);
+        }
+    } catch (SQLException e) {
+        // manejar excepción
+        e.printStackTrace();
+    }
+    
+    return usuarios;
+}
 
 }

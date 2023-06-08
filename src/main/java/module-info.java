@@ -5,6 +5,7 @@ module gestor.eventos {
     requires javafx.base;
     requires javafx.graphics;
     requires java.base;
+    requires javafx.web;
 
     opens modelo to javafx.base;
     opens gestor.eventos to javafx.fxml;

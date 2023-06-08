@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
+import gestor.eventos.App;
 import modelo.Boleto;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -16,43 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 public class ReportGenerator {
 
-    // Dependiendo de tu arquitectura, podrías necesitar inyectar aquí tus clases de servicio o de repositorio.
-    public List<Evento> getEventos(String estado, LocalDateTime fecha) {
-        List<Evento> events = new ArrayList<>();
-        String query = "SELECT * FROM eventos WHARE ";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                Evento event = new Evento(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("sinopsis"),
-                        rs.getObject("fechaInicio", LocalDateTime.class),
-                        rs.getObject("fechaFin", LocalDateTime.class),
-                        rs.getString("imagenPublicitaria"),
-                        rs.getString("responsable"),
-                        rs.getObject("fechaHoraPublicacion", LocalDateTime.class),
-                        rs.getObject("fechaHoraOcultar", LocalDateTime.class)
-                );
-                
-                events.add(event);
-            }
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return events;
-    }
-
-    public void generarReporteEventos(String estado, LocalDateTime fecha) {
-        List<Evento> eventos = getEventos(estado, fecha);
+    public static void generarReporteEventos() {
+        List<Evento> eventos = EventManager.getEvents();
 
         StringBuilder html = new StringBuilder();
 
@@ -61,14 +27,14 @@ public class ReportGenerator {
         html.append("<body>\n");
         html.append("<h1>Reporte de Eventos</h1>\n");
         html.append("<table>\n");
-        html.append("<tr><th>Nombre</th><th>Fecha</th><th>Hora Inicio</th><th>Hora Fin</th></tr>\n");
+        html.append("<tr><th>Nombre</th><th>Sinopsis</th><th>Fecha Inicio</th><th>Fecha Fin</th></tr>\n");
 
         for (Evento evento : eventos) {
             html.append("<tr>");
             html.append("<td>").append(evento.getNombre()).append("</td>");
+            html.append("<td>").append(evento.getSinopsis()).append("</td>");
             html.append("<td>").append(evento.getFechaInicio().toLocalDate()).append("</td>");
-            html.append("<td>").append(evento.getFechaInicio().toLocalTime()).append("</td>");
-            html.append("<td>").append(evento.getFechaFin().toLocalTime()).append("</td>");
+            html.append("<td>").append(evento.getFechaFin().toLocalDate()).append("</td>");
             html.append("</tr>\n");
         }
 
@@ -76,19 +42,26 @@ public class ReportGenerator {
         html.append("</body>\n");
         html.append("</html>\n");
 
-        try (PrintWriter out = new PrintWriter("reporte_eventos.html")) {
+        // Ensure directory exists
+        File directory = new File("c:\\reportes");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
+        try (PrintWriter out = new PrintWriter(new File(directory, "reporte_eventos.html"))) {
             out.println(html.toString());
+            App.idReporte=1;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     public List<Boleto> getBoletos(int eventoId) {
         // Implementar la lógica para obtener los boletos de la base de datos filtrados por eventoId.
         List<Boleto> listaBoletos = new ArrayList<>();
         return listaBoletos;
     }
-    
+
     public void generarReporteBoletos(int eventoId) {
         List<Boleto> boletos = getBoletos(eventoId);
 
@@ -108,20 +81,20 @@ public class ReportGenerator {
             e.printStackTrace();
         }
     }
-    
+
     public List<Boleto> getBoletosEvento(int eventoId) {
         // Implementar la lógica para obtener los boletos de la base de datos filtrados por eventoId.
         List<Boleto> listaBoleto = new ArrayList<>();
         return listaBoleto;
     }
-    
+
     public Usuario getUsuarioBoleto(int boletoId) {
         // Implementar la lógica para obtener el usuario que compró un boleto específico.
         Usuario usuario = new Usuario();
-        
+
         return usuario;
     }
-    
+
     public void generarReporteBoletosEvento(int eventoId) {
         List<Boleto> boletos = getBoletosEvento(eventoId);
 
@@ -144,36 +117,53 @@ public class ReportGenerator {
             e.printStackTrace();
         }
     }
-    
-    public List<Usuario> getUsuarios(String rol, String estado) {
-        // Implementar la lógica para obtener los usuarios de la base de datos.
-        // Se puede utilizar el rol y el estado como filtros para la consulta.
-        return new ArrayList<>();
-    }
-    
-    public void generarReporteUsuarios(String rol, String estado) {
-        List<Usuario> usuarios = getUsuarios(rol, estado);
 
-        try (PrintWriter out = new PrintWriter("reporte_usuarios.html")) {
-            out.println("<html><body>");
-            out.println("<h1>Reporte de Usuarios</h1>");
+    public static void generarReporteUsuarios() {
+        List<Usuario> usuarios = UserManager.todosLosUsuarios();
 
-            for (Usuario usuario : usuarios) {
-                out.println("<p>" + usuario.toString() + "</p>"); // Asegúrate de implementar el método toString() en tu clase Usuario.
-            }
+        StringBuilder html = new StringBuilder();
 
-            out.println("</body></html>");
+        html.append("<html>\n");
+        html.append("<head><title>Reporte de Usuarios</title></head>\n");
+        html.append("<body>\n");
+        html.append("<h1>Reporte de Usuarios</h1>\n");
+        html.append("<table>\n");
+        html.append("<tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Teléfono</th><th>Rol</th></tr>\n");
 
+        for (Usuario usuario : usuarios) {
+            html.append("<tr>");
+            html.append("<td>").append(usuario.getId()).append("</td>");
+            html.append("<td>").append(usuario.getNombre()).append("</td>");
+            html.append("<td>").append(usuario.getApellido()).append("</td>");
+            html.append("<td>").append(usuario.getEmail()).append("</td>");
+            html.append("<td>").append(usuario.getTelefono()).append("</td>");
+            html.append("<td>").append(usuario.getRol()).append("</td>");
+            html.append("</tr>\n");
+        }
+
+        html.append("</table>\n");
+        html.append("</body>\n");
+        html.append("</html>\n");
+
+        // Ensure directory exists
+        File directory = new File("c:\\reportes");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
+        try (PrintWriter out = new PrintWriter(new File(directory, "reporte_usuarios.html"))) {
+            out.println(html.toString());
+            App.idReporte=2;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     public Boleto getBoleto(int idBoleto) {
-        
+
         return new Boleto();
     }
-    
+
     public void generarReporteBoleto(int idBoleto) {
         Boleto boleto = getBoleto(idBoleto);
 

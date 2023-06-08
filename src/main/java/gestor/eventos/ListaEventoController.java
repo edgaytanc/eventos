@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -82,12 +83,21 @@ public class ListaEventoController implements Initializable {
                 // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
             }
         } else {
-            try {
-                App.setRoot("compraBoletos");
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+            if (App.selectedEvent != null) {
+                try {
+                    App.setRoot("compraBoletos");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("No selecciono evento");
+                alert.showAndWait();
             }
+
         }
 
     }

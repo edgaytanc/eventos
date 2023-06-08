@@ -18,14 +18,14 @@ import modelo.ReportGenerator;
  *
  * @author David
  */
-public class PanelAdministradorController implements Initializable {
+public class PanelReportesController implements Initializable {
 
     @FXML
-    private Button btnAddEventos;
+    private Button btnEventos;
     @FXML
-    private Button btnLista;
+    private Button btnUsuarios;
     @FXML
-    private Button btnReportes;
+    private Button btnRegresar;
 
     /**
      * Initializes the controller class.
@@ -33,12 +33,14 @@ public class PanelAdministradorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
+    }    
 
     @FXML
-    private void addEventos(ActionEvent event) {
+    private void RepEventos(ActionEvent event) {
+        ReportGenerator.generarReporteEventos();
+        App.idReporte=1;
         try {
-            App.setRoot("AddEvent");
+            App.setRoot("reportViewer");
         } catch (IOException e) {
             e.printStackTrace();
             // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
@@ -46,25 +48,26 @@ public class PanelAdministradorController implements Initializable {
     }
 
     @FXML
-    private void listarEventos(ActionEvent event) {
-        try {
-            App.setRoot("listaEvento");
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
-        }
-    }
-
-    @FXML
-    private void reportes(ActionEvent event) {
-        
+    private void RepUsuarios(ActionEvent event) {
+        ReportGenerator.generarReporteUsuarios();
+        App.idReporte=2;
         
         try {
-            App.setRoot("panelReportes");
+            App.setRoot("reportViewer");
         } catch (IOException e) {
             e.printStackTrace();
             // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
         }
     }
 
+    @FXML
+    private void regresar(ActionEvent event) {
+        try {
+            App.setRoot("PanelAdministrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+        }
+    }
+    
 }

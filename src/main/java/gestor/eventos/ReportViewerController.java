@@ -11,54 +11,39 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import modelo.ReportGenerator;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 /**
  * FXML Controller class
  *
  * @author David
  */
-public class PanelAdministradorController implements Initializable {
+public class ReportViewerController implements Initializable {
 
     @FXML
-    private Button btnAddEventos;
+    private WebView webView;
     @FXML
-    private Button btnLista;
-    @FXML
-    private Button btnReportes;
+    private Button btnRegresar;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
-    @FXML
-    private void addEventos(ActionEvent event) {
-        try {
-            App.setRoot("AddEvent");
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+        WebEngine webEngine = webView.getEngine();
+        String urls = null;
+        if (App.idReporte == 1) {
+            urls = "file:///C:/reportes/reporte_eventos.html";
+        } else if (App.idReporte == 2) {
+            urls = "file:///C:/reportes/reporte_usuarios.html";
         }
-    }
+
+        webEngine.load(urls);
+    }    
 
     @FXML
-    private void listarEventos(ActionEvent event) {
-        try {
-            App.setRoot("listaEvento");
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
-        }
-    }
-
-    @FXML
-    private void reportes(ActionEvent event) {
-        
-        
+    private void regresar(ActionEvent event) {
         try {
             App.setRoot("panelReportes");
         } catch (IOException e) {
@@ -66,5 +51,5 @@ public class PanelAdministradorController implements Initializable {
             // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
         }
     }
-
+    
 }

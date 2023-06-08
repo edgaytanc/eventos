@@ -1,4 +1,3 @@
-
 package modelo;
 
 import java.sql.Connection;
@@ -20,9 +19,10 @@ public class DatabaseConnection {
             System.out.println("Conexion con exito");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            System.out.println("Conexion sin  exito");
+            System.out.println("Conexion sin exito");
         }
 
         return connection;
     }
 }
+

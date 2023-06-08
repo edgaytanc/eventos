@@ -15,9 +15,6 @@ public class Evento {
     private String responsable;
     private LocalDateTime fechaHoraPublicacion;
     private LocalDateTime fechaHoraOcultar;
-    
-    
-    // Constructor, getters y setters
 
     public Evento(int id, String nombre, String sinopsis, LocalDateTime fechaInicio, LocalDateTime fechaFin, String imagenPublicitaria, String responsable, LocalDateTime fechaHoraPublicacion, LocalDateTime fechaHoraOcultar) {
         this.id = id;
