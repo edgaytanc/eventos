@@ -62,4 +62,21 @@ public class SeccionManager {
         }
     }
 
+    public static int getMaxId() {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT MAX(id) AS max_id FROM secciones";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            // manejar excepción
+            e.printStackTrace();
+        }
+
+        // Devolver -1 para indicar que ocurrió un error
+        return -1;
+    }
+
 }

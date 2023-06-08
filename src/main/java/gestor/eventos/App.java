@@ -7,11 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import modelo.Cliente;
 import modelo.Evento;
+import modelo.ListaAsientoSeleccionado;
 import modelo.Usuario;
 
 /**
@@ -24,6 +27,9 @@ public class App extends Application {
     public static Usuario usuarioActivo = null; //guarda el usuario activo de la aplicacion
     public static Integer idReporte;
     public static Integer eventoCrud;
+    public static Integer tiempoLimite;
+    public static ListaAsientoSeleccionado lista = new ListaAsientoSeleccionado();
+    public static ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -46,12 +52,8 @@ public class App extends Application {
             vbox.setAlignment(Pos.CENTER);
         }
 
-        
-
         return root;
     }
-    
-    
 
     public static void main(String[] args) {
         launch();

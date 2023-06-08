@@ -18,4 +18,8 @@ public class ListaAsientoSeleccionado {
     public ArrayList<AsientoSeleccionado> lista(){
         return asientosSeleccionados;
     }
+    
+    public int cantidadAsientos(){
+        return asientosSeleccionados.size();
+    }
 }

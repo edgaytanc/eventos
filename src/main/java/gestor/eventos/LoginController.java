@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
                 
                 //aqui se llama a toda la parte de compra de boletos
                 try {
-                    App.setRoot("compraBoletos");
+                    App.setRoot("panelUsuario");
                 } catch (IOException e) {
                     e.printStackTrace();
                     // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.

@@ -7,10 +7,12 @@ D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Event
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\ControladorCompraBoletos.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\RegistroController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Usuario.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PanelUsuarioController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\UserManager.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\UserSession.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Seccion.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Asiento.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\ClienteManager.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PanelReportesController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\CompradorController.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\DatabaseConnection.java
@@ -38,3 +40,4 @@ D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\event
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\BoletoManager.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\Temporizador.java
 D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\gestor\eventos\PanelAdministradorController.java
+D:\Users\David\Desktop\workspace\java\Progra1\eventos\src\main\java\modelo\PrecioDetalle.java

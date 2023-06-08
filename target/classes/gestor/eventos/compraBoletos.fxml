@@ -12,6 +12,9 @@
 <AnchorPane id="AnchorPane" prefHeight="524.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor.eventos.CompraBoletosController">
    <VBox alignment="CENTER" prefHeight="487.0" prefWidth="678.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0">
       <children>
+          
+          <Label fx:id="temporizadorLabel" layoutX="14" layoutY="14" />
+
          <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="102.0" prefWidth="678.0" style="-fx-background-color: green;">
             <children>
                <Label fx:id="txtEscenario" layoutX="167.0" layoutY="32.0" text="ESCENARIO">

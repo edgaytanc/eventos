@@ -9,16 +9,16 @@ public class Cliente{
     
     private int id;
     private String nombre;
+    private String apellido;
     private String correo;
-    private String direccion;
-    private String numeroTarjeta;
+    private String telefono;
 
-    public Cliente(int id, String nombre, String correo, String direccion, String numeroTarjeta) {
+    public Cliente(int id, String nombre, String apellido, String correo, String telefono) {
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.correo = correo;
-        this.direccion = direccion;
-        this.numeroTarjeta = numeroTarjeta;
+        this.telefono = telefono;
     }
 
     public int getId() {
@@ -45,26 +45,26 @@ public class Cliente{
         this.correo = correo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public String getNumeroTarjeta() {
-        return numeroTarjeta;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setNumeroTarjeta(String numeroTarjeta) {
-        this.numeroTarjeta = numeroTarjeta;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", correo=" + correo +
-               ", direccion=" + direccion + ", numeroTarjeta=" + numeroTarjeta + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", Apellido=" + apellido +
+               ", correo=" + correo + ", Telefono=" + telefono + '}';
     }
     
     

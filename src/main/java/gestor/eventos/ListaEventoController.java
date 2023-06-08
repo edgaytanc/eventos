@@ -46,6 +46,8 @@ public class ListaEventoController implements Initializable {
     private Button btnEditar;
     @FXML
     private Button btnEliminar;
+    @FXML
+    private Button btnRegresar;
 
     /**
      * Initializes the controller class.
@@ -70,6 +72,10 @@ public class ListaEventoController implements Initializable {
             }
         });
         if (App.usuarioActivo == null) {
+            btnEditar.setDisable(true);
+            btnEliminar.setDisable(true);
+        }
+        else if (App.usuarioActivo.getRol().equals("cliente")) {
             btnEditar.setDisable(true);
             btnEliminar.setDisable(true);
         }
@@ -127,6 +133,7 @@ public class ListaEventoController implements Initializable {
         } else {
             if (App.selectedEvent != null) {
                 try {
+                    App.tiempoLimite=5;
                     App.setRoot("compraBoletos");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -142,6 +149,34 @@ public class ListaEventoController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    private void regresar(ActionEvent event) {
+        if (App.usuarioActivo == null) {
+            try {
+                App.setRoot("inicio");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+            }
+        } else {
+            if (App.usuarioActivo.getRol().equals("cliente")) {
+                try {
+                    App.setRoot("panelUsuario");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+                }
+            } else {
+                try {
+                    App.setRoot("panelAdministrador");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+                }
+            }
+        }
     }
 
 }

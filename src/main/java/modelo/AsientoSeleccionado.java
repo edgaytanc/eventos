@@ -5,10 +5,12 @@ package modelo;
 public class AsientoSeleccionado {
     private String asiento;
     private String seccion;
+    private String precio;
 
-    public AsientoSeleccionado(String asiento, String seccion) {
+    public AsientoSeleccionado(String asiento, String seccion, String precio) {
         this.asiento = asiento;
         this.seccion = seccion;
+        this.precio = precio;
     }
 
     public String getAsiento() {
@@ -26,6 +28,16 @@ public class AsientoSeleccionado {
     public void setSeccion(String seccion) {
         this.seccion = seccion;
     }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+    
+    
     
     
 }

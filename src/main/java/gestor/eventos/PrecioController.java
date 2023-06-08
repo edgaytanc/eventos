@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gestor.eventos;
 
 import modelo.TipoBoleto;
@@ -14,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import modelo.EventManager;
@@ -24,11 +21,6 @@ import modelo.EventManager;
 import modelo.Seccion;
 import modelo.SeccionManager;
 
-/**
- * FXML Controller class
- *
- * @author David
- */
 public class PrecioController implements Initializable {
 
     @FXML
@@ -37,52 +29,49 @@ public class PrecioController implements Initializable {
     private ComboBox<String> tipoBoletoBox;
     @FXML
     private TextField precioField;
+    @FXML
+    private Button btnGuardar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("VIP+M&G","VIP","Platea A","PlateaB");
+        items.addAll("VIP+M&G", "VIP", "PLATEA A", "PLATEA B");
         tipoBoletoBox.setItems(items);
-        
+
         eventoBox.setItems(cargaEventos());
-    }    
+    }
 
     @FXML
     public void guardarPrecio() {
-        
+
         String nombreSeccion = tipoBoletoBox.getValue();
         String nombreEvento = eventoBox.getValue();
         int idEvento = (int) EventManager.buscarEvento(nombreEvento);
-        int idSeccion = SeccionManager.countEvents() + 1;
-        
-        Seccion seccion = new Seccion(idSeccion,nombreSeccion,idEvento);
-        if(SeccionManager.addSeccion(seccion)){
+        int idSeccion = SeccionManager.getMaxId() + 1;
+
+        Seccion seccion = new Seccion(idSeccion, nombreSeccion, idEvento);
+        if (SeccionManager.addSeccion(seccion)) {
             System.out.println("Insercion de seccion exitosa");
-        }
-        else{
+        } else {
             System.out.println("Insercion de seccion fallida");
         }
-        
-        Precio precio = new Precio(1,idEvento,idSeccion,Double.parseDouble(precioField.getText()));
-        if(PrecioManager.guardarPrecio(precio)){
+
+        Precio precio = new Precio(1, idEvento, idSeccion, Double.parseDouble(precioField.getText()));
+        if (PrecioManager.guardarPrecio(precio)) {
             System.out.println("Insercion de precio exitosa");
-        }
-        else{
+        } else {
             System.out.println("Insercion de precio fallida");
         }
-       
+
     }
-    
-    private ObservableList<String> cargaEventos(){
+
+    private ObservableList<String> cargaEventos() {
         ObservableList<String> items = FXCollections.observableArrayList();
         List<Evento> listaEventos = EventManager.getEvents();
-        for(Evento evento: listaEventos){
+        for (Evento evento : listaEventos) {
             items.add(evento.getNombre());
         }
         return items;
     }
-    
+
 }

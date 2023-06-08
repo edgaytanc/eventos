@@ -6,9 +6,14 @@ package gestor.eventos;
 
 import java.io.IOException;
 import java.net.URL;
+import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,17 +23,18 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
 import modelo.AsientoSeleccionado;
 import modelo.ListaAsientoSeleccionado;
+import modelo.PrecioManager;
+import modelo.Temporizador;
+import modelo.TemporizadorListener;
 
 /**
  * FXML Controller class
  *
  * @author David
  */
-public class CompraBoletosController implements Initializable {
+public class CompraBoletosController implements Initializable, TemporizadorListener {
 
     private ListaAsientoSeleccionado lista = new ListaAsientoSeleccionado();
     private int contador = 0;
@@ -41,13 +47,17 @@ public class CompraBoletosController implements Initializable {
     private Button btnCancelar;
     @FXML
     private Label txtEscenario;
+    @FXML
+    private Label temporizadorLabel;
+
+    private Temporizador temporizador;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         if (App.selectedEvent != null) {
             txtEscenario.setText("ESCENARIO " + App.selectedEvent.getNombre());
         }
@@ -78,36 +88,52 @@ public class CompraBoletosController implements Initializable {
             }
         }
 
+        temporizador = new Temporizador(this);
+        temporizador.start();
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.seconds(1),
+                        event -> temporizadorLabel.setText("Tiempo restante: " + temporizador.getTiempoRestante())
+                )
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
     }
 
     private void handleSeatSelection(RadioButton seatButton) {
-        if (contador <= 10) {
+        if (contador < 10) {
+            String seatPosition = seatButton.getText();
+            String section = (String) seatButton.getUserData();
+            String precio = String.valueOf(PrecioManager.precioSeccion(App.selectedEvent.getNombre(), section));
+            System.out.println("Asiento seleccionado: " + seatPosition + " " + section + " Q" + precio);
 
-        } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
-            alert.setTitle("Limite Alcanzado");
-            alert.setContentText("Ya no es posible seleccionar mas asientos/n Llego a su limite");
-        }
-        String seatPosition = seatButton.getText();
-        String section = (String) seatButton.getUserData();
-        System.out.println("Asiento seleccionado: " + seatPosition + " " + section);
+            alert.setTitle("Asiento Seleccionado");
+            alert.setContentText(seatPosition + " " + section+ " Q" + precio);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Asiento Seleccionado");
-        alert.setContentText(seatPosition + " " + section);
+            // Este es el cambio importante
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
 
-        // Este es el cambio importante
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+                AsientoSeleccionado asientoSeleccionado = new AsientoSeleccionado(seatPosition, section,precio);
+                App.lista.add(asientoSeleccionado);
+                contador++;
 
-            AsientoSeleccionado asientoSeleccionado = new AsientoSeleccionado(seatPosition, section);
-            lista.add(asientoSeleccionado);
-
+            } else {
+                seatButton.setSelected(false);
+            }
         } else {
             seatButton.setSelected(false);
+            Alert alerts = new Alert(Alert.AlertType.INFORMATION);
+            alerts.setHeaderText(null);
+            alerts.setTitle("Limite Alcanzado");
+            alerts.setContentText("Ya no es posible seleccionar mas asientos\nLlegó a su límite");
+            alerts.showAndWait();
         }
+
     }
 
     private String rowToLetter(int row) {
@@ -123,20 +149,41 @@ public class CompraBoletosController implements Initializable {
     }
 
     @FXML
-    private void clickAceptar(ActionEvent event) throws IOException{
+    private void clickAceptar(ActionEvent event) throws IOException {
         //Se modifica el codigo para enviar el listado a el carrito de compras
 
-        ArrayList<AsientoSeleccionado> listado = lista.lista();
+        ArrayList<AsientoSeleccionado> listado = App.lista.lista();
 
         for (AsientoSeleccionado asiento : listado) {
             System.out.println(asiento.getAsiento() + " " + asiento.getSeccion());
         }
-        
+
+        //detiene el temporalizador
+        temporizador.detener();
         App.setRoot("comprador");
     }
 
     @FXML
     private void clickCancelar(ActionEvent event) {
+        try {
+                temporizador.detener();
+                
+                App.setRoot("panelUsuario");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    @Override
+    public void tiempoAgotado() {
+        // Para evitar problemas con el hilo de JavaFX, asegúrate de hacer esto en el hilo de la interfaz gráfica de usuario:
+        Platform.runLater(() -> {
+            try {
+                App.setRoot("panelUsuario");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }
