@@ -26,6 +26,8 @@ public class PanelReportesController implements Initializable {
     private Button btnUsuarios;
     @FXML
     private Button btnRegresar;
+    @FXML
+    private Button btnBoletos;
 
     /**
      * Initializes the controller class.
@@ -64,6 +66,19 @@ public class PanelReportesController implements Initializable {
     private void regresar(ActionEvent event) {
         try {
             App.setRoot("PanelAdministrador");
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.
+        }
+    }
+
+    @FXML
+    private void RepBoletos(ActionEvent event) {
+        ReportGenerator.generarReporteBoletos();
+        App.idReporte=3;
+        
+        try {
+            App.setRoot("reportViewer");
         } catch (IOException e) {
             e.printStackTrace();
             // Aquí deberías manejar la excepción, quizá mostrando un mensaje al usuario.

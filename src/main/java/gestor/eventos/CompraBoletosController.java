@@ -167,7 +167,7 @@ public class CompraBoletosController implements Initializable, TemporizadorListe
     private void clickCancelar(ActionEvent event) {
         try {
                 temporizador.detener();
-                
+                App.lista.limpia();
                 App.setRoot("panelUsuario");
             } catch (IOException e) {
                 e.printStackTrace();

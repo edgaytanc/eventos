@@ -5,12 +5,7 @@ import modelo.Boleto;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-//import com.ipc.gestorboletos.evento.*;
 import modelo.Usuario;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
@@ -50,7 +45,7 @@ public class ReportGenerator {
 
         try (PrintWriter out = new PrintWriter(new File(directory, "reporte_eventos.html"))) {
             out.println(html.toString());
-            App.idReporte=1;
+            App.idReporte = 1;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -153,31 +148,48 @@ public class ReportGenerator {
 
         try (PrintWriter out = new PrintWriter(new File(directory, "reporte_usuarios.html"))) {
             out.println(html.toString());
-            App.idReporte=2;
+            App.idReporte = 2;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Boleto getBoleto(int idBoleto) {
+    public static void generarReporteBoletos() {
+        ArrayList<BoletoDetalle> boletos = BoletoManager.listaBoletos();
 
-        return new Boleto();
-    }
+        StringBuilder html = new StringBuilder();
 
-    public void generarReporteBoleto(int idBoleto) {
-        Boleto boleto = getBoleto(idBoleto);
+        html.append("<html>\n");
+        html.append("<head><title>Reporte de Boletos</title></head>\n");
+        html.append("<body>\n");
+        html.append("<h1>Reporte de Boletos</h1>\n");
+        html.append("<table>\n");
+        html.append("<tr><th>ID</th><th>Evento </th><th>Usuario </th><th>Sección</th><th>Asiento</th><th>Fecha</th></tr>\n");
 
-        if (boleto == null) {
-            System.out.println("No se encontró un boleto con el ID proporcionado.");
-            return;
+        for (BoletoDetalle boleto : boletos) {
+            html.append("<tr>");
+            html.append("<td>").append(boleto.getId()).append("</td>");
+            html.append("<td>").append(boleto.getNombreEvento()).append("</td>");
+            html.append("<td>").append(boleto.getNombreUsuario()).append("</td>");
+            html.append("<td>").append(boleto.getSeccion()).append("</td>");
+            html.append("<td>").append(boleto.getAsiento()).append("</td>");
+            html.append("<td>").append(boleto.getFechaHoraEvento().toLocalDate()).append("</td>");
+            html.append("</tr>\n");
         }
 
-        try (PrintWriter out = new PrintWriter("reporte_boleto_" + idBoleto + ".html")) {
-            out.println("<html><body>");
-            out.println("<h1>Reporte del Boleto</h1>");
-            out.println("<p>" + boleto.toString() + "</p>"); // Asegúrate de implementar el método toString() en tu clase Boleto.
-            out.println("</body></html>");
+        html.append("</table>\n");
+        html.append("</body>\n");
+        html.append("</html>\n");
 
+        // Ensure directory exists
+        File directory = new File("c:\\reportes");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
+        try (PrintWriter out = new PrintWriter(new File(directory, "reporte_boletos.html"))) {
+            out.println(html.toString());
+            App.idReporte = 3;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

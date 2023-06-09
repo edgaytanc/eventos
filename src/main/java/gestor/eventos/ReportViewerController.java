@@ -37,6 +37,8 @@ public class ReportViewerController implements Initializable {
             urls = "file:///C:/reportes/reporte_eventos.html";
         } else if (App.idReporte == 2) {
             urls = "file:///C:/reportes/reporte_usuarios.html";
+        } else if (App.idReporte == 3){
+            urls = "file:///C:/reportes/reporte_boletos.html";
         }
 
         webEngine.load(urls);

@@ -1,8 +1,7 @@
-
 package modelo;
 
-
 public class AsientoSeleccionado {
+
     private String asiento;
     private String seccion;
     private String precio;
@@ -36,8 +35,4 @@ public class AsientoSeleccionado {
     public void setPrecio(String precio) {
         this.precio = precio;
     }
-    
-    
-    
-    
 }

@@ -31,6 +31,25 @@ public class UserManager {
         return false;
     }
 
+    public static int idUsuario(String email) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT id FROM usuarios WHERE email = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            // manejar excepción
+            e.printStackTrace();
+        }
+
+        // Retornar -1 si no se encontró el ID o hubo un error
+        return -1;
+    }
+
     public static String loginUser(String email, String password) {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = "SELECT * FROM usuarios WHERE email = ?";
@@ -50,8 +69,8 @@ public class UserManager {
                     String telefono = resultSet.getString("telefono");
                     String rol = resultSet.getString("rol");
 
-                    Usuario usuario = new Usuario(id,nombre,apellido,mail,telefono,storedPassword,rol);
-                    App.usuarioActivo=usuario;
+                    Usuario usuario = new Usuario(id, nombre, apellido, mail, telefono, storedPassword, rol);
+                    App.usuarioActivo = usuario;
                     return resultSet.getString("rol");
                 }
             }
@@ -87,33 +106,33 @@ public class UserManager {
         // Devolver -1 para indicar que ocurrió un error
         return -1;
     }
-    
+
     public static List<Usuario> todosLosUsuarios() {
-    List<Usuario> usuarios = new ArrayList<>();
-    
-    try (Connection connection = DatabaseConnection.getConnection()) {
-        String query = "SELECT * FROM usuarios";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String nombre = resultSet.getString("nombre");
-            String apellido = resultSet.getString("apellido");
-            String email = resultSet.getString("email");
-            String telefono = resultSet.getString("telefono");
-            String contrasena = resultSet.getString("contraseña");
-            String rol = resultSet.getString("rol");
-            
-            Usuario usuario = new Usuario(id, nombre, apellido, email, telefono, contrasena, rol);
-            usuarios.add(usuario);
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM usuarios";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nombre = resultSet.getString("nombre");
+                String apellido = resultSet.getString("apellido");
+                String email = resultSet.getString("email");
+                String telefono = resultSet.getString("telefono");
+                String contrasena = resultSet.getString("contraseña");
+                String rol = resultSet.getString("rol");
+
+                Usuario usuario = new Usuario(id, nombre, apellido, email, telefono, contrasena, rol);
+                usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            // manejar excepción
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        // manejar excepción
-        e.printStackTrace();
+
+        return usuarios;
     }
-    
-    return usuarios;
-}
 
 }

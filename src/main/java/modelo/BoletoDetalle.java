@@ -1,20 +1,28 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package modelo;
 
 import java.time.LocalDateTime;
 
-public class Boleto {
+/**
+ *
+ * @author David
+ */
+public class BoletoDetalle {
 
     private int id;
-    private int eventoId;
-    private int usuarioId;
+    private String nombreEvento;
+    private String nombreUsuario;
     private String seccion;
     private String asiento;
     private LocalDateTime fechaHoraEvento;
 
-    public Boleto(int id, int eventoId, int usuarioId, String seccion, String asiento, LocalDateTime fechaHoraEvento) {
+    public BoletoDetalle(int id, String nombreEvento, String nombreUsuario, String seccion, String asiento, LocalDateTime fechaHoraEvento) {
         this.id = id;
-        this.eventoId = eventoId;
-        this.usuarioId = usuarioId;
+        this.nombreEvento = nombreEvento;
+        this.nombreUsuario = nombreUsuario;
         this.seccion = seccion;
         this.asiento = asiento;
         this.fechaHoraEvento = fechaHoraEvento;
@@ -28,20 +36,20 @@ public class Boleto {
         this.id = id;
     }
 
-    public int getEventoId() {
-        return eventoId;
+    public String getNombreEvento() {
+        return nombreEvento;
     }
 
-    public void setEventoId(int eventoId) {
-        this.eventoId = eventoId;
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getSeccion() {

@@ -22,4 +22,8 @@ public class ListaAsientoSeleccionado {
     public int cantidadAsientos(){
         return asientosSeleccionados.size();
     }
+    
+    public void limpia(){
+        asientosSeleccionados.clear();
+    }
 }

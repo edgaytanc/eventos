@@ -1,10 +1,13 @@
 package gestor.eventos;
 
+import java.io.IOException;
 import modelo.TipoBoleto;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +34,8 @@ public class PrecioController implements Initializable {
     private TextField precioField;
     @FXML
     private Button btnGuardar;
+    @FXML
+    private Button btnContinuar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +77,15 @@ public class PrecioController implements Initializable {
             items.add(evento.getNombre());
         }
         return items;
+    }
+
+    @FXML
+    private void continuar(ActionEvent event) {
+        try {
+            App.setRoot("panelAdministrador");
+        } catch (IOException ex) {
+            Logger.getLogger(AddEventController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
